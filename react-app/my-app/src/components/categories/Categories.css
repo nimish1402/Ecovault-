@@ -1,0 +1,13 @@
+.cat-container{
+    box-shadow:0 1px 4px 0 rgba(0,0,0,0.3);
+    padding: 8px 20px;
+    cursor: pointer;
+    
+}
+
+.category{
+    color:rgba(0, 47, 52, 1);
+    padding:10px;
+    cursor: pointer;
+   
+}

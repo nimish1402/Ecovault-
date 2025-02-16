@@ -1,0 +1,43 @@
+.H-icons{
+    color: rgb(110, 106, 106);
+    font-size: 1.5rem;
+}
+.H-icons:hover{
+    color: rgb(0, 0, 0);
+}
+.icon-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: white;
+    cursor: pointer;
+    margin: 5px;
+}
+.links{
+    text-decoration: none;
+    font-size: 20px;
+    color: #2a2828;
+    font-weight: bold;
+}
+.price-text{
+    color: #2a2828;
+    
+}
+.clear-btn{
+    
+    height: 24px;
+    padding: 10px 10px ;
+    margin-left: 10px;
+    margin-top: 10px;
+    outline: none;
+    border: 2px solid #4f4c4c;
+    margin-right: 10px;
+    background-color: #4f4c4c;
+    color: white;
+    border-radius: 5px;
+    border:none;
+    padding: 0px 15px;
+    font-size: 13px;
+}
