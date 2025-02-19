@@ -54,15 +54,31 @@ const Users = mongoose.model('Users', {
     password: String,
     likedProducts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Products'}]
 });
-const Products = mongoose.model('Products', { 
+
+let schema = new mongoose.Schema({
     pname: String, 
     pdesc: String, 
     price: String, 
     category:String, 
     pimage: String,
     pimage2: String,
-    addedBy:  mongoose.Schema.Types.ObjectId
-});
+    addedBy:  mongoose.Schema.Types.ObjectId,
+    ploc: {
+        type:{
+            type: String,
+            enum: ['Point'],
+            default: 'Point'
+        },
+        coordinates: {
+            type: [Number]
+        }
+
+    }
+})
+
+schema.index({ploc: '2dsphere'});
+
+const Products = mongoose.model('Products', schema);
 
 
 
@@ -76,7 +92,8 @@ app.get('/', (req, res) => {
 // Add product route
 app.post('/add-product', upload.fields([{name: 'pimage'},{name:'pimage2'}]),(req, res) => {
 
-
+    const plat = req.body.plat;
+    const plong = req.body.plong;
     const pname = req.body.pname;
     const pdesc = req.body.pdesc;
     const price = req.body.price;
@@ -85,7 +102,9 @@ app.post('/add-product', upload.fields([{name: 'pimage'},{name:'pimage2'}]),(req
     const pimage2 = req.files.pimage2[0].path;
     const addedBy = req.body.userId;
 
-    const products = new Products({pname, pdesc, price, category, pimage, pimage2, addedBy })
+    const products = new Products({pname, pdesc, price, category, pimage, pimage2, addedBy, 
+        ploc: {type: 'Point', coordinates: [plat, plong]}  
+    })
     
     products.save()
         .then(() =>{
@@ -172,6 +191,8 @@ app.get('/get-product/:pId', (req, res) => {
 // search API
 app.get('/search', (req, res) => {
 
+    let latitude = req.query.loc.split(',')[0];
+    let longitude = req.query.loc.split(',')[1];
     let search = req.query.search;
     
     Products.find({
@@ -180,7 +201,15 @@ app.get('/search', (req, res) => {
             {pname: {$regex: search, $options: 'i'}},
             {pdesc: {$regex: search, $options: 'i'}},
             {category: {$regex: search, $options: 'i'}}
-        ]
+        ],
+        ploc:{
+            $near: {
+                $geometry:{
+                    type: 'Point',
+                    coordinates: [parseFloat(longitude), parseFloat(latitude)]
+                }
+            }
+        }
     })
         .then((results) => {
             res.send({message: 'Product found', product: results})

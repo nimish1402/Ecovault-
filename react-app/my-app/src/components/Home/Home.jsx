@@ -43,7 +43,7 @@ function Home() {
     }
 
     const handleClick = () =>{
-        const url = "http://localhost:4000/search?search=" + search; 
+        const url = "http://localhost:4000/search?search=" + search + '&loc=' + localStorage.getItem('user-loc') ; 
         axios.get(url)
             .then((res) => {
                 setcatproducts(res.data.product);  // Only update `catproducts`
