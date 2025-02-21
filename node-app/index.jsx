@@ -207,7 +207,8 @@ app.get('/search', (req, res) => {
                 $geometry:{
                     type: 'Point',
                     coordinates: [parseFloat(longitude), parseFloat(latitude)]
-                }
+                },
+                $maxDistance: 10000000
             }
         }
     })
