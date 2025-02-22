@@ -8,6 +8,7 @@ function Header (props){
     
     const [loc, setloc] = useState();
     const navigate = useNavigate();
+    const [ShowOver, setShowOver] = useState(false);
 
     const handleLogout = () =>{
         localStorage.removeItem('token');
@@ -64,21 +65,33 @@ function Header (props){
             </div>
             
             <div>
-                
-                { !!localStorage.getItem('token') && 
-                <Link to='/add-product'>
-                    <button className='logout-btn'>Add Product</button>
-                </Link>}
+                <div onClick={()=>{
+                    setShowOver(!ShowOver)
+                }} className='profile_icon'>N</div>
 
-                { !!localStorage.getItem('token') && 
-                <Link to='/liked-products'>
-                    <button className='logout-btn'><FaHeart /></button>
-                </Link>}
+                {ShowOver && <div className='dropdown'>
+                    <div>
+                        { !!localStorage.getItem('token') && 
+                            <Link to='/add-product'>
+                                <button className='logout-btn'>Add Product</button>
+                            </Link>
+                        }
+                    </div>
+                    <div>
+                        { !!localStorage.getItem('token') && 
+                            <Link to='/liked-products'>
+                                <button className='logout-btn'>Liked</button>
+                            </Link>
+                        }
+                    </div>
+                    <div>
+                        {!localStorage.getItem('token') ?
+                            <Link className='links' to ="/Login"> Login</Link> :
+                            <button className='logout-btn' onClick={handleLogout}>LOGOUT</button>
+                        }
+                    </div>
 
-                {/* if not logged in shows the login button if logged in shows the logout button  */}
-                {!localStorage.getItem('token') ?
-                    <Link className='links' to ="/Login"> Login</Link> :
-                    <button className='logout-btn' onClick={handleLogout}>LOGOUT</button>}
+                </div>}
             </div>
         </div>
     )

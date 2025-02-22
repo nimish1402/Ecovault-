@@ -47,3 +47,26 @@
     border:none;
     padding: 1px 16px;
 }
+
+
+.profile_icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #4f4c4c;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.dropdown{
+    width: 200px;
+    background: grey;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top:70px ;
+    margin-left:50px ;
+    z-index: 10;
+}
+/* 52:15 */

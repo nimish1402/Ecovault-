@@ -206,9 +206,9 @@ app.get('/search', (req, res) => {
             $near: {
                 $geometry:{
                     type: 'Point',
-                    coordinates: [parseFloat(longitude), parseFloat(latitude)]
+                    coordinates: [parseFloat(latitude), parseFloat(longitude)]
                 },
-                $maxDistance: 10000000
+                $maxDistance: 500 * 1000
             }
         }
     })
